@@ -5,13 +5,13 @@ import java.awt.GridLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 
-import javax.swing.JRadioButton;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JCheckBox;
-import javax.swing.ButtonGroup;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
 /**
  * Jiawei Chen <p>
  * 12/03/2024 <p>
@@ -21,7 +21,7 @@ import javax.swing.ButtonGroup;
 public class PlaneUI extends JFrame {
 	//private GridLayout settings;
 	private BorderLayout border = new BorderLayout();
-	private String[] qualTypes = { "High", "Medium", "Low" };
+	private JLabel status = new JLabel("[ Plane Status ]");
 	
 	/**
 	 * No argument constructor. Adds the different panels to the main UI
@@ -30,63 +30,66 @@ public class PlaneUI extends JFrame {
 		super("Plane Simulator");
 		setLayout(border);
 		
-		add(new JLabel("Printer : MyPrinter"), BorderLayout.NORTH);
-		add(settingsPanel(), BorderLayout.CENTER);
-		add(qualityPanel(), BorderLayout.SOUTH);
-		add(buttonsPanel(), BorderLayout.EAST);
+		add(status, BorderLayout.NORTH);
+		add(ListUI(), BorderLayout.CENTER);
+		add(InteractionUI(), BorderLayout.SOUTH);
+		
+		
 	} //end constructor
 	
-	/**
-	 * Formats JCheckBoxes and JRadioButtons with a GridLayout
-	 * @return Settings panel with JRadioButtons and JCheckBoxes
-	 */
-	public JPanel settingsPanel() {
-		ButtonGroup radioGroup = new ButtonGroup();
-		JPanel settings = new JPanel(new GridLayout(3, 2));
-		
-		JRadioButton sel = new JRadioButton("Selection");
-		JRadioButton all = new JRadioButton("All");
-		JRadioButton applet = new JRadioButton("Applet");
-		
-		radioGroup.add(sel);
-		radioGroup.add(all);
-		radioGroup.add(applet);
-		
-		settings.add(new JCheckBox("Images"));
-		settings.add(sel);
-		settings.add(new JCheckBox("Text"));
-		settings.add(all);
-		settings.add(new JCheckBox("Code"));
-		settings.add(applet);
-		
-		return settings;
-	} //end settingsPanel
+
 	
 	/**
-	 * Formats the JComboBox and "Print to File" checkbox with a FlowLayout aligned to the left.
-	 * @return Quality panel with Printer Quality dropdown and Print to File checkbox
+	 * Handles the JTextField showing departure/arrivals.
 	 */
-	public JPanel qualityPanel() {
-		JPanel quality = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		quality.add(new JLabel("Printer Quality"));
-		quality.add(new JComboBox<String>(qualTypes));
-		quality.add(new JCheckBox("Print to File"));
+	public JPanel ListUI() {
+		JPanel ui = new JPanel(new GridLayout(1, 3, 10, 5));
+
+		JPanel arrivals = new JPanel(new BorderLayout());
+		JPanel departures = new JPanel(new BorderLayout());
+
+		JLabel arrTitle = new JLabel("Arrivals", SwingConstants.CENTER);
+		JLabel depTitle = new JLabel("Departures", SwingConstants.CENTER);
+		JList<Integer> arrDisplay = new JList<Integer>();
+		JList<Integer> depDisplay = new JList<Integer>();
 		
-		return quality;
-	} //end qualityPanel
+		arrivals.add(arrTitle, BorderLayout.NORTH);
+		arrivals.add(arrDisplay, BorderLayout.CENTER);
+		
+		departures.add(depTitle, BorderLayout.NORTH);
+		departures.add(depDisplay, BorderLayout.CENTER);
+		
+		ui.add(arrivals);
+		ui.add(departures);
+
+		ui.add(new JPanel()); //temporary for anim panel
 	
-	/**
-	 * Formats the JButtons with a GridLayout
-	 * @return Buttons panel with the 4 buttons
-	 */
-	public JPanel buttonsPanel() {
-		JPanel buttons = new JPanel(new GridLayout(4, 1, 5, 5));
+
 		
-		buttons.add(new JButton("OK"));
-		buttons.add(new JButton("Cancel"));
-		buttons.add(new JButton("Setup"));
-		buttons.add(new JButton("Help"));
-		
-		return buttons;
+		return ui;
 	} //end buttonsPanel
+	
+	public JPanel InteractionUI() {
+		JPanel interact = new JPanel(new GridLayout(2, 1));
+		JTextField arrInput = new JTextField(10);
+		JTextField depInput = new JTextField(10);
+		
+		JButton start = new JButton("Start");
+		JButton exit = new JButton("Exit");
+		
+		JPanel inputFields = new JPanel((new FlowLayout()));
+		inputFields.add(new JLabel("Arrivals:"));
+		inputFields.add(arrInput);
+		inputFields.add(new JLabel("Departures:"));
+		inputFields.add(depInput);
+		
+		JPanel buttonField = new JPanel(new FlowLayout());
+		buttonField.add(start);
+		buttonField.add(exit);
+		
+		interact.add(inputFields);
+		interact.add(buttonField);
+		
+		return interact;
+	}
 } //end class
