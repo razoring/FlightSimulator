@@ -20,7 +20,7 @@ import javax.swing.SwingConstants;
 public class PlaneUI extends JFrame {
 	//Private settings for border & status label
 	private BorderLayout border = new BorderLayout();
-	private JLabel status = new JLabel("Press \'start\' to begin the simulator.");
+	private JLabel status = new JLabel("Press \'Start\' to begin the simulator.");
 	
 	/**
 	 * No argument constructor. Adds the different panels to the main UI
