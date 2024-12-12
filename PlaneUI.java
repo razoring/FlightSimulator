@@ -2,10 +2,13 @@ package FlightSimulator;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import javax.swing.JButton;
@@ -20,27 +23,34 @@ import javax.swing.SwingConstants;
 public class PlaneUI extends JFrame {
 	//Private settings for border & status label
 	private BorderLayout border = new BorderLayout();
-	private JLabel status = new JLabel("Press \'Start\' to begin the simulator.");
-	
+	private JLabel status = new JLabel("  Press \'Start\' to begin the simulator.");
+
+	JTextField arrInput = new JTextField(10); //initialize input field
+	JTextField depInput = new JTextField(10);
+
+	JButton start = new JButton("Start"); //initialize buttons
+	JButton exit = new JButton("Exit");
+
 	/**
 	 * No argument constructor. Adds the different panels to the main UI
 	 */
 	public PlaneUI() {
 		super("Plane Simulator"); //set title
 		setLayout(border);
-		
+
 		add(status, BorderLayout.NORTH); //add status labal to main UI
 		add(ListUI(), BorderLayout.CENTER); //add planes display to main UI
 		add(InteractionUI(), BorderLayout.SOUTH); //add interactive ui elements to main UI
-		
+
 	} //end constructor
-	
+
 	/**
 	 * Handles the JTextField showing departure/arrivals.
 	 */
 	public JPanel ListUI() {
-		JPanel ui = new JPanel(new GridLayout(1, 3, 10, 5)); //setting a grid with 1 row, 3 columns
-		
+		JPanel ui = new JPanel(new BorderLayout()); //for padding
+		JPanel list = new JPanel(new GridLayout(1, 2, 10, 5)); //setting a grid with 1 row, 2 columns
+
 		JPanel arrivals = new JPanel(new BorderLayout()); //for arrivals
 		JPanel departures = new JPanel(new BorderLayout()); //for departures
 
@@ -48,47 +58,103 @@ public class PlaneUI extends JFrame {
 		JLabel depTitle = new JLabel("Departures", SwingConstants.CENTER); //aligning header with swingconstants
 		JList<Integer> arrDisplay = new JList<Integer>(); //using JList to display inbound/outbound planes
 		JList<Integer> depDisplay = new JList<Integer>();
-		
+
 		arrivals.add(arrTitle, BorderLayout.NORTH); //add header
 		arrivals.add(arrDisplay, BorderLayout.CENTER); //add display JList
-		
+
 		departures.add(depTitle, BorderLayout.NORTH); //add header
 		departures.add(depDisplay, BorderLayout.CENTER); //add display JList
-		
-		ui.add(arrivals); //add inbound
-		ui.add(departures); //add outbound
 
-		ui.add(new JPanel()); //animation panel
+		list.add(arrivals); //add inbound
+		list.add(departures); //add outbound
+
+		ui.add(list, BorderLayout.CENTER);
+		ui.add(new JPanel(), BorderLayout.WEST);
+		ui.add(new JPanel(), BorderLayout.EAST);
 
 		return ui; //return ui
 	} //end ListUI
-	
+
 	/**
 	 * Handles interactive elements (input fields, start/exit buttons)
 	 * @return interact - A GridLayout with inputFields and buttonField
 	 */
 	public JPanel InteractionUI() {
+		JPanel ui = new JPanel(new BorderLayout());
 		JPanel interact = new JPanel(new GridLayout(2, 1)); //grid with 2 rows, 1 column
-		JTextField arrInput = new JTextField(10); //initialize input field
-		JTextField depInput = new JTextField(10);
 		
-		JButton start = new JButton("Start"); //initialize buttons
-		JButton exit = new JButton("Exit");
-		
-		JPanel inputFields = new JPanel((new FlowLayout())); //using flowlayout for inputfields
-		inputFields.add(new JLabel("Arrivals:")); //header
-		inputFields.add(arrInput); //textfield
-		inputFields.add(new JLabel("Departures:"));
-		inputFields.add(depInput);
-		
-		JPanel buttonField = new JPanel(new FlowLayout()); //using flowlayout for buttons
+		JPanel arrivals = new JPanel(new FlowLayout()); 
+		arrivals.add(new JLabel("Arrivals:")); //header
+		arrivals.add(arrInput); //textfield
+
+		JPanel departures = new JPanel(new FlowLayout());
+		departures.add(new JLabel("Departures:"));
+		departures.add(depInput);
+
+		JPanel buttonField = new JPanel(new GridLayout(1, 2, 10, 5)); //using flowlayout for buttons
 		buttonField.add(start); //add buttons
 		buttonField.add(exit);
+
+		JPanel inputFields = new JPanel((new GridLayout(1, 2))); //using flowlayout for inputfields
+		inputFields.add(arrivals);
+		inputFields.add(departures);
 		
 		interact.add(inputFields); //add to main interact ui
 		interact.add(buttonField);
-		
-		return interact; //return ui
+
+		TextFieldHandler handler = new TextFieldHandler();
+		arrInput.addActionListener(handler);
+		depInput.addActionListener(handler);
+
+		ButtonHandler buttonHandler = new ButtonHandler();
+		start.addActionListener(buttonHandler);
+		exit.addActionListener(buttonHandler);
+
+		ui.add(interact, BorderLayout.CENTER);
+		ui.add(new JPanel(), BorderLayout.WEST);
+		ui.add(new JPanel(), BorderLayout.EAST);
+		ui.add(new JPanel(), BorderLayout.SOUTH);
+
+		return ui; //return ui
 	} //end InteractionUI
-	
+
+
+	//Handler Classes
+	private class TextFieldHandler implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			try {
+				int flightNum = Integer.parseInt(event.getActionCommand());
+
+				if (flightNum >= 1 && flightNum <= 9999) {
+					if (event.getSource() == arrInput) { //handles arrivals
+						//%04d displays "1" as "0001"
+						System.out.printf("Arriving: %04d\n", flightNum);
+					} else if (event.getSource() == depInput) { //handles arrivals
+						System.out.printf("Departing: %04d\n", flightNum);
+					}
+				} else {
+					System.out.println("Invalid flight number.");
+				}
+
+			} catch (NumberFormatException ex) {
+				JOptionPane.showMessageDialog( null, "Invalid input.", "Error", JOptionPane.WARNING_MESSAGE);
+			}
+		}
+
+	}
+
+	private class ButtonHandler implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			if (event.getSource() == exit) {
+				System.out.println("Exit");
+				System.exit(ABORT);
+			} else if (event.getSource() == start) {
+				System.out.println("Start"); //placeholder
+			}
+		}
+
+	}
+
 } //end class
