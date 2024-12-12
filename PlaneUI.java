@@ -19,12 +19,18 @@ import javax.swing.SwingConstants;
  * 12/11/2024 <p>
  * Generates the frontend UI for the plane simulator.
  */
+
+/* TODO:
+ * + Animation panel
+ * + Individual TODOs in methods/inner classes
+ */
 @SuppressWarnings("serial")
 public class PlaneUI extends JFrame {
 	//Private settings for border & status label
 	private BorderLayout border = new BorderLayout();
 	private JLabel status = new JLabel("  Press \'Start\' to begin the simulator.");
 
+	//Input Fields/Buttons that need event handling
 	JTextField arrInput = new JTextField(10); //initialize input field
 	JTextField depInput = new JTextField(10);
 
@@ -104,11 +110,12 @@ public class PlaneUI extends JFrame {
 		interact.add(inputFields); //add to main interact ui
 		interact.add(buttonField);
 
-		TextFieldHandler handler = new TextFieldHandler();
+		//ActionListeners
+		TextFieldHandler handler = new TextFieldHandler(); //for arrival/departure inputs
 		arrInput.addActionListener(handler);
 		depInput.addActionListener(handler);
 
-		ButtonHandler buttonHandler = new ButtonHandler();
+		ButtonHandler buttonHandler = new ButtonHandler(); //for start/exit buttons
 		start.addActionListener(buttonHandler);
 		exit.addActionListener(buttonHandler);
 
@@ -123,8 +130,13 @@ public class PlaneUI extends JFrame {
 	} //end InteractionUI
 
 
-	//Handler Classes
+	//Handler Inner Classes
 	private class TextFieldHandler implements ActionListener {
+		/* TODO: 
+		 * + Duplicate handling
+		 * + Connect to logic (add to queue)
+		 * + Silent handle NumberFormatException
+		 */
 		@Override
 		public void actionPerformed(ActionEvent event) {
 			try {
@@ -141,24 +153,31 @@ public class PlaneUI extends JFrame {
 					System.out.println("Invalid flight number.");
 				}
 
-			} catch (NumberFormatException ex) {
+			} catch (NumberFormatException ex) { //unable to parse
 				JOptionPane.showMessageDialog( null, "Invalid input.", "Error", JOptionPane.WARNING_MESSAGE);
 			}
-		}
+		} //end actionPerformed
+		
+	} //end TextFieldHandler
 
-	}
-
+	/**
+	 * Handles actions for the start/exit buttons
+	 */
 	private class ButtonHandler implements ActionListener {
+		/* TODO:
+		 * + Connect 'start' event to logic circuit (start simulation)
+		 * + OPT: Change 'start' to 'pause' if simulator is running
+		 */
 		@Override
 		public void actionPerformed(ActionEvent event) {
 			if (event.getSource() == exit) {
 				System.out.println("Exit");
-				System.exit(ABORT);
+				System.exit(ABORT); //Terminate the code (I looked this one up)
 			} else if (event.getSource() == start) {
 				System.out.println("Start"); //placeholder
 			}
-		}
+		} //end actionPerformed
 
-	}
+	} //end ButtonHandler
 
 } //end class
