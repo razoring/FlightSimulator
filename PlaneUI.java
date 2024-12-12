@@ -48,20 +48,20 @@ public class PlaneUI extends JFrame {
 	 * Handles the JTextField showing departure/arrivals.
 	 */
 	public JPanel ListUI() {
-		JPanel ui = new JPanel(new BorderLayout()); //for padding
+		JPanel ui = new JPanel(new BorderLayout()); //main "hub" ui
 		JPanel list = new JPanel(new GridLayout(1, 2, 10, 5)); //setting a grid with 1 row, 2 columns
-
-		JPanel arrivals = new JPanel(new BorderLayout()); //for arrivals
-		JPanel departures = new JPanel(new BorderLayout()); //for departures
-
+		
+		//Initializing header & list
 		JLabel arrTitle = new JLabel("Arrivals", SwingConstants.CENTER); //aligning header with swingconstants (idk if we learned this)
 		JLabel depTitle = new JLabel("Departures", SwingConstants.CENTER); //aligning header with swingconstants
 		JList<Integer> arrDisplay = new JList<Integer>(); //using JList to display inbound/outbound planes
 		JList<Integer> depDisplay = new JList<Integer>();
 
+		JPanel arrivals = new JPanel(new BorderLayout()); //for arrivals
 		arrivals.add(arrTitle, BorderLayout.NORTH); //add header
 		arrivals.add(arrDisplay, BorderLayout.CENTER); //add display JList
 
+		JPanel departures = new JPanel(new BorderLayout()); //for departures
 		departures.add(depTitle, BorderLayout.NORTH); //add header
 		departures.add(depDisplay, BorderLayout.CENTER); //add display JList
 
@@ -69,6 +69,8 @@ public class PlaneUI extends JFrame {
 		list.add(departures); //add outbound
 
 		ui.add(list, BorderLayout.CENTER);
+		
+		//padding
 		ui.add(new JPanel(), BorderLayout.WEST);
 		ui.add(new JPanel(), BorderLayout.EAST);
 
@@ -80,22 +82,22 @@ public class PlaneUI extends JFrame {
 	 * @return interact - A GridLayout with inputFields and buttonField
 	 */
 	public JPanel InteractionUI() {
-		JPanel ui = new JPanel(new BorderLayout());
+		JPanel ui = new JPanel(new BorderLayout()); //main "hub" panel
 		JPanel interact = new JPanel(new GridLayout(2, 1)); //grid with 2 rows, 1 column
 		
-		JPanel arrivals = new JPanel(new FlowLayout()); 
+		JPanel arrivals = new JPanel(new FlowLayout()); //grouping arrival header & textfield together
 		arrivals.add(new JLabel("Arrivals:")); //header
 		arrivals.add(arrInput); //textfield
 
-		JPanel departures = new JPanel(new FlowLayout());
-		departures.add(new JLabel("Departures:"));
-		departures.add(depInput);
+		JPanel departures = new JPanel(new FlowLayout()); //grouping header & textfield together
+		departures.add(new JLabel("Departures:")); //header
+		departures.add(depInput); //textfield
 
-		JPanel buttonField = new JPanel(new GridLayout(1, 2, 10, 5)); //using flowlayout for buttons
+		JPanel buttonField = new JPanel(new GridLayout(1, 2, 10, 5)); //gridlayout for start/exit buttons
 		buttonField.add(start); //add buttons
 		buttonField.add(exit);
 
-		JPanel inputFields = new JPanel((new GridLayout(1, 2))); //using flowlayout for inputfields
+		JPanel inputFields = new JPanel((new GridLayout(1, 2))); //gridlayout for arrival & departure input fields
 		inputFields.add(arrivals);
 		inputFields.add(departures);
 		
@@ -111,6 +113,8 @@ public class PlaneUI extends JFrame {
 		exit.addActionListener(buttonHandler);
 
 		ui.add(interact, BorderLayout.CENTER);
+		
+		//padding
 		ui.add(new JPanel(), BorderLayout.WEST);
 		ui.add(new JPanel(), BorderLayout.EAST);
 		ui.add(new JPanel(), BorderLayout.SOUTH);
