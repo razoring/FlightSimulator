@@ -23,7 +23,9 @@ import javax.swing.SwingConstants;
 /* TODO:
  * + Animation panel
  * + Individual TODOs in methods/inner classes
+ * + Raymond Likes Men
  */
+
 @SuppressWarnings("serial")
 public class PlaneUI extends JFrame {
 	//Private settings for border & status label
