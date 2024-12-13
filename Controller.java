@@ -15,11 +15,13 @@ import java.io.File;
  */
 
 public class Controller {
-	Queue<String> inbound = new LinkedList<String>();
-	Queue<String> outbound = new LinkedList<String>();
+	public Queue<String> inbound = new LinkedList<String>();
+	public Queue<String> outbound = new LinkedList<String>();
+	public boolean handling = false; // debounce
 	
 	public void addIn(String plane) {
 		inbound.add(plane);
+		System.out.println("in");
 	}
 	
 	public void removeIn() {
@@ -28,6 +30,7 @@ public class Controller {
 
 	public void addOut(String plane) {
 		outbound.add(plane);
+		System.out.println("out");
 	}
 	
 	public void removeOut() {
@@ -36,7 +39,7 @@ public class Controller {
 	
 	@Override
 	public String toString() {
-		return "Inbound: " + Arrays.deepToString(inbound.toArray()) + "Outbound: " + Arrays.deepToString(outbound.toArray());
+		return "Inbound: " + Arrays.deepToString(inbound.toArray()) + " Outbound: " + Arrays.deepToString(outbound.toArray());
 	}
 	
 	public void updateQueue(Queue q) {
