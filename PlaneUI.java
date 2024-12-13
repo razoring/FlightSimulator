@@ -152,10 +152,13 @@ public class PlaneUI extends JFrame {
 				} else {
 					System.out.println("Invalid flight number.");
 				}
-
+				
 			} catch (NumberFormatException ex) { //unable to parse
 				JOptionPane.showMessageDialog( null, "Invalid input.", "Error", JOptionPane.WARNING_MESSAGE);
 			}
+			
+			arrInput.setText("");
+			depInput.setText("");
 		} //end actionPerformed
 		
 	} //end TextFieldHandler
