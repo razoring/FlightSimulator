@@ -18,23 +18,16 @@ public class Controller {
 	public Queue<String> inbound = new LinkedList<String>();
 	public Queue<String> outbound = new LinkedList<String>();
 	public boolean handling = false; // debounce
+	public boolean started = false; // handle simulation init
 	
 	public void addIn(String plane) {
 		inbound.add(plane);
-		System.out.println("in");
-	}
-	
-	public void removeIn() {
-		inbound.remove();
+		//System.out.println("in");
 	}
 
 	public void addOut(String plane) {
 		outbound.add(plane);
-		System.out.println("out");
-	}
-	
-	public void removeOut() {
-		outbound.remove();
+		//System.out.println("out");
 	}
 	
 	@Override
@@ -43,6 +36,7 @@ public class Controller {
 	}
 	
 	public void updateQueue(Queue q) {
-		
+		q.remove();
+		PlaneUIApp.app.refreshList();
 	}
 }

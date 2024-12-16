@@ -4,13 +4,17 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Arrays;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -23,14 +27,22 @@ import javax.swing.SwingConstants;
 /* TODO:
  * + Animation panel
  * + Individual TODOs in methods/inner classes
- * + Raymond Likes Men
+ * + Raymond Likes Tracy >:)
  */
 
 @SuppressWarnings("serial")
 public class PlaneUI extends JFrame {
+	// public global variables for synchronous processing
+	public JLabel status = new JLabel("Press \'Start\' to begin the simulator.");
+	public File depFile = new File("takeoffs.txt");
+	public File arrFile = new File("arrivals.txt");
+
 	//Private settings for border & status label
 	private BorderLayout border = new BorderLayout();
-	private JLabel status = new JLabel("  Press \'Start\' to begin the simulator.");
+	private DefaultListModel<String> arrModel = new DefaultListModel<>();
+	private DefaultListModel<String> depModel = new DefaultListModel<>();
+	private JList<String> arrDisplay = new JList<>(arrModel);
+	private JList<String> depDisplay = new JList<>(depModel);
 
 	//Input Fields/Buttons that need event handling
 	JTextField arrInput = new JTextField(10); //initialize input field
@@ -62,8 +74,6 @@ public class PlaneUI extends JFrame {
 		//Initializing header & list
 		JLabel arrTitle = new JLabel("Arrivals", SwingConstants.CENTER); //aligning header with swingconstants (idk if we learned this)
 		JLabel depTitle = new JLabel("Departures", SwingConstants.CENTER); //aligning header with swingconstants
-		JList<Integer> arrDisplay = new JList<Integer>(); //using JList to display inbound/outbound planes
-		JList<Integer> depDisplay = new JList<Integer>();
 
 		JPanel arrivals = new JPanel(new BorderLayout()); //for arrivals
 		arrivals.add(arrTitle, BorderLayout.NORTH); //add header
@@ -145,18 +155,25 @@ public class PlaneUI extends JFrame {
 				int flightNum = Integer.parseInt(event.getActionCommand());
 
 				if (flightNum >= 1 && flightNum <= 9999) {
-					if (event.getSource() == arrInput) { //handles arrivals
-						//%04d displays "1" as "0001"
-						System.out.printf("Arriving: %04d\n", flightNum);
-					} else if (event.getSource() == depInput) { //handles arrivals
-						System.out.printf("Departing: %04d\n", flightNum);
+					//%04d displays "1" as "0001"
+					String flight = String.format("%04d", flightNum);
+					if (!PlaneUIApp.ctrl.inbound.contains(flight)) {
+						if (event.getSource() == arrInput) { //handles arrivals
+							PlaneUIApp.ctrl.addIn(flight);
+						} else if (event.getSource() == depInput) { //handles arrivals
+							PlaneUIApp.ctrl.addOut(flight);
+						}
+						//System.out.println(PlaneUIApp.ctrl.toString());
+						refreshList();
+						status.setText("Press \'Start\' to begin the simulator.");
+					} else {
+						status.setText("409: Flight already exists");
 					}
 				} else {
-					System.out.println("Invalid flight number.");
+					status.setText("400: Invalid flight number");
 				}
-				
 			} catch (NumberFormatException ex) { //unable to parse
-				JOptionPane.showMessageDialog( null, "Invalid input.", "Error", JOptionPane.WARNING_MESSAGE);
+				status.setText("400: Invalid input");
 			}
 			
 			arrInput.setText("");
@@ -176,13 +193,39 @@ public class PlaneUI extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent event) {
 			if (event.getSource() == exit) {
-				System.out.println("Exit");
-				System.exit(ABORT); //Terminate the code (I looked this one up)
+				try { // write to created/found files
+					FileWriter depWriter = new FileWriter(depFile);
+					depWriter.write(""+Arrays.deepToString(PlaneUIApp.ctrl.outbound.toArray()));
+					depWriter.close();
+					
+					FileWriter arrWriter = new FileWriter(arrFile);
+					arrWriter.write(""+Arrays.deepToString(PlaneUIApp.ctrl.inbound.toArray()));
+					arrWriter.close();
+				} catch(IOException e) {
+					System.out.println("409: Trouble writing... exiting...");
+				}
+				System.exit(ABORT); //Terminate the code (I looked this one up) congrats! :D
 			} else if (event.getSource() == start) {
-				System.out.println("Start"); //placeholder
+				PlaneUIApp.ctrl.started = true;
 			}
 		} //end actionPerformed
 
 	} //end ButtonHandler
-
+	
+	
+	public void refreshList() {
+		revalidate(); // refresh status
+		repaint();
+		
+	    // clear existing list data
+	    arrModel.clear();
+	    depModel.clear();
+	    
+	    for (String flight : PlaneUIApp.ctrl.inbound) { // fetch data from inbound queue
+	        arrModel.addElement(flight);
+	    }
+	    for (String flight : PlaneUIApp.ctrl.outbound) { // fetch data from outbound queue
+	        depModel.addElement(flight);
+	    }
+	}
 } //end class
