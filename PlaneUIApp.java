@@ -14,14 +14,14 @@ import java.util.Scanner;
  * !!! Normal Status Messages (Flight In/Out) *DONE: Needs to be checked*
  * !!! Error Status Messages *DONE: Needs to be checked*
  * !!! File Saving *DONE: Needs to be checked*
- * !!! 50x50 Plane Animation (must be realistic D:)
+ * !!! 50x50 Plane Animation (must be realistic D:) [Raymond's Job]
  * !!! Function Docstrings
  * !! Comments
  * !! Remove Unused Code
- * !! CHECK FOR REDUNDANCY
+ * !! CHECK FOR REDUNDANCY mashallah
  * ! Every error must have a status message either in console or in the label
  * ! Check code
- * - Optimize code
+ * - Optimize code [raymond's job]
  * - Remove unused imports
  */
 
@@ -34,7 +34,8 @@ public class PlaneUIApp {
 		app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		app.setSize(500, 500); // set frame size
 		app.setVisible(true); // display frame
-		
+
+		//Try-Catch statements for reading arrivals/departure data
 		try {
 			try {
 				if (app.depFile.createNewFile()) {
@@ -76,9 +77,11 @@ public class PlaneUIApp {
 		        	ctrl.addOut(val.trim());
 		        }
 			}
-			
+
+		// Refreshes arrivals/departure displays
 	        app.refreshList();
-	        
+
+		    // Close files to prevent memory leaks 
 		    arrRead.close();
 		    depRead.close();
 		} catch (FileNotFoundException e) {
