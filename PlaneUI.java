@@ -27,7 +27,7 @@ import javax.swing.SwingConstants;
 /* TODO:
  * + Animation panel
  * + Individual TODOs in methods/inner classes
- * + Raymond Likes Tracy >:)
+ * + Raymond Likes Men.
  */
 
 @SuppressWarnings("serial")
@@ -212,7 +212,9 @@ public class PlaneUI extends JFrame {
 
 	} //end ButtonHandler
 	
-	
+	/**
+	 * Updates the arrivals/departures display
+	 */
 	public void refreshList() {
 		revalidate(); // refresh status
 		repaint();
