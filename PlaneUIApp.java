@@ -18,9 +18,13 @@ import java.util.Scanner;
  * ! Every error must have a status message either in console or in the label
  * ! Check code
  * - Optimize code [raymond's job]
- * - Remove unused imports
  */
 
+/**
+ * Jiawei Chen, Raymond So <p>
+ * 12/17/2024 <p>
+ * Generates the frame, and handles persistent data for arrival/departure files.
+ */
 public class PlaneUIApp {
 	public static Controller ctrl = new Controller(); // global reference for synchronous processing
 	public static PlaneUI app = new PlaneUI(); // global reference for synchronous processing
@@ -57,9 +61,11 @@ public class PlaneUIApp {
 				System.exit(0); // exit to allow for full processing reset
 			}
 			
+			//creating readers for arrival/departure files
 			Scanner arrRead = new Scanner(app.arrFile);
 			Scanner depRead = new Scanner(app.depFile);
-
+			
+			//reads eachfile for flight numbers
 			if (arrRead.hasNext()) {
 		        String arrData = arrRead.nextLine();
 		        for (String val : arrData.substring(1,arrData.length()-1).split(",")) {
