@@ -40,6 +40,7 @@ public class PlaneUI extends JFrame {
 	//public ImageIcon icon = new ImageIcon("src/FlightSimulator/PlaneAnim/placeholder.jpeg");
 	//public ImageIcon icon = new ImageIcon("src/FlightSimulator/PlaneAnim/placeholder.png"); // this works
 	public JLabel img = new JLabel(icon);
+	public JPanel pad = new JPanel();
 
 	//Private settings for border & status label
 	private BorderLayout border = new BorderLayout();
@@ -65,8 +66,8 @@ public class PlaneUI extends JFrame {
 		//Padding for status bar
 		JPanel statusBar = new JPanel(new BorderLayout());
 		statusBar.add(status, BorderLayout.CENTER);
-		statusBar.add(new JPanel(), BorderLayout.WEST);
-		statusBar.add(new JPanel(), BorderLayout.SOUTH);
+		statusBar.add(pad, BorderLayout.WEST);
+		statusBar.add(pad, BorderLayout.SOUTH);
 		
 		add(statusBar, BorderLayout.NORTH); //add status labal to main UI
 		add(ListUI(), BorderLayout.CENTER); //add planes display to main UI
@@ -99,8 +100,8 @@ public class PlaneUI extends JFrame {
 		ui.add(list, BorderLayout.CENTER);
 		
 		//padding
-		ui.add(new JPanel(), BorderLayout.WEST);
-		ui.add(new JPanel(), BorderLayout.EAST);
+		ui.add(pad, BorderLayout.WEST);
+		ui.add(pad, BorderLayout.EAST);
 
 		return ui; //return ui
 	} //end ListUI
@@ -131,6 +132,9 @@ public class PlaneUI extends JFrame {
 		
 		interact.add(inputFields); //add to main interact ui
 		interact.add(buttonField);
+		
+		start.setFocusable(false);
+		exit.setFocusable(false);
 
 		//ActionListeners
 		TextFieldHandler handler = new TextFieldHandler(); //for arrival/departure inputs
