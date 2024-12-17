@@ -1,10 +1,6 @@
 package FlightSimulator;
 
 import javax.swing.JFrame;
-import static java.lang.System.out;
-import javax.swing.Timer;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
