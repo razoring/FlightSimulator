@@ -31,7 +31,7 @@ public class PlaneUIApp {
 	private static boolean runThread = false; // decide running mode
 	
 	static public void main(String[] args) {
-		app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		app.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		app.setSize(500, 500); // set frame size
 		app.setVisible(true); // display frame
 
