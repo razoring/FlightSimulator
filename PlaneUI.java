@@ -130,6 +130,9 @@ public class PlaneUI extends JFrame {
 		
 		interact.add(inputFields); //add to main interact ui
 		interact.add(buttonField);
+		
+		start.setFocusable(false);
+		exit.setFocusable(false);
 
 		//ActionListeners
 		TextFieldHandler handler = new TextFieldHandler(); //for arrival/departure inputs
