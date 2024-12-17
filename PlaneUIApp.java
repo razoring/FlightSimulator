@@ -30,7 +30,7 @@ public class PlaneUIApp {
 	public static PlaneUI app = new PlaneUI(); // global reference for synchronous processing
 	private static boolean runThread = false; // decide running mode
 	
-	static public void main(String[] args) {
+	public static void main(String[] args) {
 		app.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		app.setSize(500, 500); // set frame size
 		app.setVisible(true); // display frame
