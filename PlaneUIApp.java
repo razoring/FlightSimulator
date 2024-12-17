@@ -11,7 +11,6 @@ import java.util.Scanner;
  * !!! Error Status Messages *DONE: Needs to be checked*
  * !!! File Saving *DONE: Needs to be checked*
  * !!! 50x50 Plane Animation (must be realistic D:) [Raymond's Job]
- * !!! Function Docstrings
  * !! Comments
  * !! Remove Unused Code
  * !! CHECK FOR REDUNDANCY mashallah
