@@ -29,6 +29,7 @@ public class TimerListener {
 				for (int i = 0;i<2;i++) { // send two out
 					if (PlaneUIApp.ctrl.outbound.peek() != null) {
 						PlaneUIApp.ctrl.handling = true;
+						PlaneUIApp.app.playAnim("Departure");
 						for (int x = 0;x<2;x++) {
 							PlaneUIApp.app.status.setText(PlaneUIApp.ctrl.outbound.peek()+" takes off in.. "+(2-x)+"s");
 							wait(1);
@@ -42,6 +43,7 @@ public class TimerListener {
 
 				if (PlaneUIApp.ctrl.inbound.peek() != null) {
 					PlaneUIApp.ctrl.handling = true;
+					PlaneUIApp.app.playAnim("Arrival");
 					for (int x = 0;x<4;x++) {
 						PlaneUIApp.app.status.setText(PlaneUIApp.ctrl.inbound.peek()+" enters in.. "+(4-x)+"s");
 						wait(1);

@@ -229,9 +229,6 @@ public class PlaneUI extends JFrame {
 	 * Updates the arrivals/departures display
 	 */
 	public void refresh() {
-		revalidate(); // refresh status
-		repaint(); // repaint anim
-		
 	    // clear existing list data
 	    arrModel.clear();
 	    depModel.clear();
@@ -243,6 +240,16 @@ public class PlaneUI extends JFrame {
 	        depModel.addElement(flight);
 	    }
 	    
-	    
+		revalidate(); // refresh status
+		repaint(); // repaint anim
+	}
+	
+	public void playAnim(String type) {
+		for (int i = 0;i<11;i++) {
+		    icon = new ImageIcon("src/FlightSimulator/PlaneAnim/"+type+"/pixil-frame-"+i+".png");
+		    img.setIcon(icon);
+		}
+	    //icon = new ImageIcon("src/FlightSimulator/PlaneAnim/"+type+"/pixil-frame-0.png");
+	    //img.setIcon(icon);
 	}
 } //end class
