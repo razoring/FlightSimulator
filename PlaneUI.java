@@ -15,6 +15,7 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -36,6 +37,10 @@ public class PlaneUI extends JFrame {
 	public JLabel status = new JLabel("Press \'Start\' to begin the simulator.");
 	public File depFile = new File("takeoffs.txt");
 	public File arrFile = new File("arrivals.txt");
+	public ImageIcon icon = new ImageIcon("src/FlightSimulator/PlaneAnim/Departure/pixil-frame-0.png"); // placeholders
+	//public ImageIcon icon = new ImageIcon("src/FlightSimulator/PlaneAnim/placeholder.jpeg");
+	//public ImageIcon icon = new ImageIcon("src/FlightSimulator/PlaneAnim/placeholder.png"); // this works
+	public JLabel img = new JLabel(icon);
 
 	//Private settings for border & status label
 	private BorderLayout border = new BorderLayout();
@@ -130,13 +135,13 @@ public class PlaneUI extends JFrame {
 		ButtonHandler buttonHandler = new ButtonHandler(); //for start/exit buttons
 		start.addActionListener(buttonHandler);
 		exit.addActionListener(buttonHandler);
-
 		ui.add(interact, BorderLayout.CENTER);
 		
 		//padding
 		ui.add(new JPanel(), BorderLayout.WEST);
 		ui.add(new JPanel(), BorderLayout.EAST);
 		ui.add(new JPanel(), BorderLayout.SOUTH);
+		ui.add(img, BorderLayout.NORTH); //add status labal to main UI
 
 		return ui; //return ui
 	} //end InteractionUI
