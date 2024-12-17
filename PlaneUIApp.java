@@ -35,8 +35,8 @@ public class PlaneUIApp {
 		try {
 			try {
 				if (app.depFile.createNewFile()) {
-					System.out.println("404: File not found");
-					System.out.println("201: "+app.depFile.getName()+" created");
+					System.out.println("404: File not found"); //file not found
+					System.out.println("201: "+app.depFile.getName()+" created"); //creates new departure file
 				} else {
 					System.out.println("200: Found "+app.depFile.getName()+"");
 				}

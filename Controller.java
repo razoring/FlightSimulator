@@ -1,11 +1,8 @@
 package FlightSimulator;
 
 import java.util.Queue;
-import javax.swing.Timer;
 import java.util.Arrays;
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.io.File;
 
 /**
  * Raymond So <p>
