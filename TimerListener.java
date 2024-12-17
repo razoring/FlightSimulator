@@ -4,6 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
 
+/**
+ * Jiawei Chen, Raymond So <p>
+ * 12/17/2024 <p>
+ * Handles arrival/departure operations using timer
+ */
 public class TimerListener {
 	/**
 	 * Helper method: Waits the specified number of seconds
