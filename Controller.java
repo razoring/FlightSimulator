@@ -47,7 +47,7 @@ public class Controller {
 	 */
 	public void updateQueue(Queue q) {
 		q.remove(); // removes flight number
-		PlaneUIApp.app.refreshList(); // updates display
-		// implement 
+		PlaneUIApp.app.refresh(); // updates display
+		// implement animation
 	}
 }

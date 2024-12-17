@@ -145,6 +145,7 @@ public class PlaneUI extends JFrame {
 		ui.add(new JPanel(), BorderLayout.WEST);
 		ui.add(new JPanel(), BorderLayout.EAST);
 		ui.add(new JPanel(), BorderLayout.SOUTH);
+		
 		ui.add(img, BorderLayout.NORTH); //add status labal to main UI
 
 		return ui; //return ui
@@ -173,7 +174,7 @@ public class PlaneUI extends JFrame {
 							PlaneUIApp.ctrl.addOut(flight);
 						}
 						//System.out.println(PlaneUIApp.ctrl.toString());
-						refreshList();
+						refresh();
 						status.setText("Press \'Start\' to begin the simulator.");
 					} else {
 						status.setText("409: Flight already exists");
@@ -224,9 +225,9 @@ public class PlaneUI extends JFrame {
 	/**
 	 * Updates the arrivals/departures display
 	 */
-	public void refreshList() {
+	public void refresh() {
 		revalidate(); // refresh status
-		repaint();
+		repaint(); // repaint anim
 		
 	    // clear existing list data
 	    arrModel.clear();
@@ -238,5 +239,7 @@ public class PlaneUI extends JFrame {
 	    for (String flight : PlaneUIApp.ctrl.outbound) { // fetch data from outbound queue
 	        depModel.addElement(flight);
 	    }
+	    
+	    
 	}
 } //end class

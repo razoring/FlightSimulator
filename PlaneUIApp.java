@@ -79,7 +79,7 @@ public class PlaneUIApp {
 			}
 
 		// Refreshes arrivals/departure displays
-	        app.refreshList();
+	        app.refresh();
 
 		    // Close files to prevent memory leaks 
 		    arrRead.close();
