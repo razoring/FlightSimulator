@@ -20,7 +20,7 @@ public class Controller {
 	public Queue<String> outbound = new LinkedList<String>();
 	public boolean handling = false; // debounce, ensure only one flight is processed at a time, preventing race conditions
 	public boolean started = false; // handle simulation init
-	public String timerRelay = ""; // relay instructions from timer listener to satisfy requirements for updateQueue()
+	public String timerRelay = "Departure"; // relay instructions from timer listener to satisfy requirements for updateQueue()
 
 	/**
 	 * Helper method: Waits the specified number of seconds
