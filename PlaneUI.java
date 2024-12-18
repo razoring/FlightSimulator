@@ -165,29 +165,25 @@ public class PlaneUI extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent event) {
 			try {
-				int flightNum = Integer.parseInt(event.getActionCommand());
-
-				if (flightNum >= 1 && flightNum <= 9999) {
-					//%04d displays "1" as "0001"
-					String flight = String.format("%04d", flightNum);
-					if (!PlaneUIApp.ctrl.inbound.contains(flight)) {
-						if (event.getSource() == arrInput) { //handles arrivals
-							PlaneUIApp.ctrl.addIn(flight);
-						} else if (event.getSource() == depInput) { //handles arrivals
-							PlaneUIApp.ctrl.addOut(flight);
-						}
-						//System.out.println(PlaneUIApp.ctrl.toString());
-						refresh();
-						status.setText("Press \'Start\' to begin the simulator.");
-					} else {
-						status.setText("409: Flight already exists");
-					}
-				} else {
-					status.setText("400: Invalid flight number");
-				}
-			} catch (NumberFormatException ex) { //unable to parse
-				status.setText("400: Invalid input");
-			}
+				int flightNum = Integer.parseInt(((JTextField) event.getSource()).getText().trim());
+                if (flightNum >= 1 && flightNum <= 9999) {
+                    String flight = String.format("%04d", flightNum);
+                    if (event.getSource() == arrInput && !PlaneUIApp.ctrl.inbound.contains(flight)) {
+                        PlaneUIApp.ctrl.addIn(flight);
+                    } else if (event.getSource() == depInput && !PlaneUIApp.ctrl.outbound.contains(flight)) {
+                        PlaneUIApp.ctrl.addOut(flight);
+                    } else {
+                        status.setText("409: Flight already exists");
+                        return;
+                    }
+                    refresh();
+                    status.setText("Flight added successfully.");
+                } else {
+                    status.setText("400: Invalid flight number");
+                }
+            } catch (NumberFormatException e) {
+                status.setText("400: Invalid input");
+            }
 			
 			arrInput.setText("");
 			depInput.setText("");
@@ -246,7 +242,7 @@ public class PlaneUI extends JFrame {
 	}
 	
 	public void initAnim(String type) {
-		for (int i = 0;i<(type=="Arrival"?3:7);i++) { // if the anim type is arrival, pause at 3 (mid air), if anim type is departure, pause at 7 (grounded)
+		for (int i = 0;i<(type=="Arrival"?3:6);i++) { // if the anim type is arrival, pause at 3 (mid air), if anim type is departure, pause at 7 (grounded)
 		    icon = new ImageIcon("src/FlightSimulator/PlaneAnim/"+type+"/pixil-frame-"+i+".png");
 		    img.setIcon(icon);
 		    try {
@@ -258,7 +254,7 @@ public class PlaneUI extends JFrame {
 	}
 	
 	public void finishAnim(String type) {
-		for (int i = (type=="Arrival"?3:7);i<11;i++) { // if the anim type is arrival, resume at 3 (mid air), if anim type is departure, resume at 7 (grounded)
+		for (int i = (type=="Arrival"?0:6);i<11;i++) { // if the anim type is arrival, resume at 3 (mid air), if anim type is departure, resume at 7 (grounded)
 		    icon = new ImageIcon("src/FlightSimulator/PlaneAnim/"+type+"/pixil-frame-"+i+".png");
 		    img.setIcon(icon);
 		    try {

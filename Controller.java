@@ -1,6 +1,11 @@
 package FlightSimulator;
 
 import java.util.Queue;
+
+import javax.swing.Timer;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.LinkedList;
 
@@ -13,9 +18,30 @@ import java.util.LinkedList;
 public class Controller {
 	public Queue<String> inbound = new LinkedList<String>();
 	public Queue<String> outbound = new LinkedList<String>();
-	public boolean handling = false; // debounce
+	public boolean handling = false; // debounce, ensure only one flight is processed at a time, preventing race conditions
 	public boolean started = false; // handle simulation init
+	public String timerRelay = ""; // relay instructions from timer listener to satisfy requirements for updateQueue()
 
+	/**
+	 * Helper method: Waits the specified number of seconds
+	 * @param i -> Number of seconds to delay by
+	 */
+	private static void wait(int i) {
+		try {
+			ActionListener ticktock = new ActionListener() {
+				public void actionPerformed(ActionEvent evnt) {
+					
+				}
+			};
+			Timer timer = new Timer(i*100, ticktock); // timer is ticking
+			timer.setRepeats(false); // by using this, we are asking to off timer once
+			timer.start();
+			Thread.sleep(i*1000);
+		} catch (InterruptedException expn) {
+			
+		}
+	}
+	
 	/**
 	 * Adds a flight number to inbound flights
 	 */
@@ -42,8 +68,33 @@ public class Controller {
 	/**
 	 * Removes the specified flight from queue
 	 */
-	public void updateQueue(Queue q) {
-		q.remove(); // removes flight number
-		PlaneUIApp.app.refresh(); // updates display and status and animation
+	public void updateQueue(Queue<String> q) {
+	    if (q != null && !q.isEmpty()) {
+	        String flight = q.peek();
+	        if (flight != null) {
+	        	if (timerRelay.equals("Departure")) { // run mid frame of departure anim ONLY
+		            PlaneUIApp.app.initAnim(timerRelay);
+	        	}
+
+	            // countdown based on animation type
+	            int countdown = timerRelay.equals("Departure") ? 2 : 4;
+	            for (int x = 0; x < countdown; x++) {
+	                String statusMessage = timerRelay.equals("Departure")?flight+" takes off in.. "+(countdown - x)+"s":flight+" enters in.. "+(countdown - x)+"s";
+	                PlaneUIApp.app.status.setText(statusMessage);
+	                wait(1); // simulate the countdown
+	            }
+
+	            // finalize the animation
+	            String finalStatus = timerRelay.equals("Departure")?flight+" took off!":flight+" landed!";
+	            PlaneUIApp.app.status.setText(finalStatus);
+
+	            q.remove(); // removes flight number
+	            PlaneUIApp.app.refresh(); // updates display and status
+	            PlaneUIApp.app.finishAnim(timerRelay);
+
+	            wait(1); // wait briefly after animation
+	        }
+	    }
 	}
+
 }
