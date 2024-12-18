@@ -220,6 +220,7 @@ public class PlaneUI extends JFrame {
 				System.exit(ABORT); //Terminate the code (I looked this one up) congrats! :D
 			} else if (event.getSource() == start) {
 				PlaneUIApp.ctrl.started = true;
+				start.setEnabled(false); //disables start button
 			}
 		} //end actionPerformed
 
