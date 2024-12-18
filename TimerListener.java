@@ -40,13 +40,14 @@ public class TimerListener {
 				for (int i = 0;i<2;i++) { // send two out
 					if (PlaneUIApp.ctrl.outbound.peek() != null) { //null check if no planes are outbound
 						PlaneUIApp.ctrl.handling = true;
+						PlaneUIApp.app.initAnim("Departure");
 						for (int x = 0;x<2;x++) {
-							PlaneUIApp.app.playAnim("Departure");
 							PlaneUIApp.app.status.setText(PlaneUIApp.ctrl.outbound.peek()+" takes off in.. "+(2-x)+"s");
 							wait(1); //countdown to departure
 						}
 						PlaneUIApp.app.status.setText(PlaneUIApp.ctrl.outbound.peek()+" took off!");
 						PlaneUIApp.ctrl.updateQueue(PlaneUIApp.ctrl.outbound); //remove departed plane from display
+						PlaneUIApp.app.finishAnim("Departure");
 						wait(1);
 						PlaneUIApp.ctrl.handling = false;
 					}
@@ -54,13 +55,14 @@ public class TimerListener {
 
 				if (PlaneUIApp.ctrl.inbound.peek() != null) { //null check if no planes are inbound
 					PlaneUIApp.ctrl.handling = true;
+					PlaneUIApp.app.initAnim("Arrival");
 					for (int x = 0;x<4;x++) {
-						PlaneUIApp.app.playAnim("Arrival");
 						PlaneUIApp.app.status.setText(PlaneUIApp.ctrl.inbound.peek()+" enters in.. "+(4-x)+"s");
 						wait(1); //countdown to arrival
 					}
 					PlaneUIApp.app.status.setText(PlaneUIApp.ctrl.inbound.peek()+" landed!");
 					PlaneUIApp.ctrl.updateQueue(PlaneUIApp.ctrl.inbound); //remove arrived plane from display
+					PlaneUIApp.app.finishAnim("Arrival");
 					wait(1);
 					PlaneUIApp.ctrl.handling = false;
 				}

@@ -245,8 +245,20 @@ public class PlaneUI extends JFrame {
 		repaint(); // repaint anim
 	}
 	
-	public void playAnim(String type) {
-		for (int i = 0;i<11;i++) {
+	public void initAnim(String type) {
+		for (int i = 0;i<(type=="Arrival"?3:7);i++) { // if the anim type is arrival, pause at 3 (mid air), if anim type is departure, pause at 7 (grounded)
+		    icon = new ImageIcon("src/FlightSimulator/PlaneAnim/"+type+"/pixil-frame-"+i+".png");
+		    img.setIcon(icon);
+		    try {
+		    	Thread.sleep(100);
+		    } catch(InterruptedException e) {
+				System.out.println("500: Unable to wait...");
+		    }
+		}
+	}
+	
+	public void finishAnim(String type) {
+		for (int i = (type=="Arrival"?3:7);i<11;i++) { // if the anim type is arrival, resume at 3 (mid air), if anim type is departure, resume at 7 (grounded)
 		    icon = new ImageIcon("src/FlightSimulator/PlaneAnim/"+type+"/pixil-frame-"+i+".png");
 		    img.setIcon(icon);
 		    try {
