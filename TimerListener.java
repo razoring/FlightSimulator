@@ -39,6 +39,11 @@ public class TimerListener {
 	        if (!PlaneUIApp.ctrl.handling) {
 	            PlaneUIApp.ctrl.handling = true;
 
+	            // if both queues are empty
+	            if (PlaneUIApp.ctrl.inbound.peek() == null && PlaneUIApp.ctrl.outbound.peek() == null) {
+	                PlaneUIApp.app.status.setText("Simulation is waiting for more planes");
+	            }
+
 	            // handle departures
 	            for (int i = 0; i < 2; i++) {
 	                if (PlaneUIApp.ctrl.outbound.peek() != null && !PlaneUIApp.ctrl.outbound.peek().isEmpty()) { // check if planes are outbound
@@ -51,11 +56,6 @@ public class TimerListener {
 	            if (PlaneUIApp.ctrl.inbound.peek() != null && !PlaneUIApp.ctrl.outbound.peek().isEmpty()) { // check if planes are inbound
 	                PlaneUIApp.ctrl.updateQueue(PlaneUIApp.ctrl.inbound);
 	                PlaneUIApp.ctrl.timerRelay = "Arrival";
-	            }
-
-	            // if both queues are empty
-	            if (PlaneUIApp.ctrl.inbound.peek() == null && PlaneUIApp.ctrl.outbound.peek() == null) {
-	                PlaneUIApp.app.status.setText("Simulation is waiting for more planes");
 	            }
 
 	            PlaneUIApp.ctrl.handling = false;
