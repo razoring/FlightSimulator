@@ -40,8 +40,8 @@ public class TimerListener {
 				for (int i = 0;i<2;i++) { // send two out
 					if (PlaneUIApp.ctrl.outbound.peek() != null) { //null check if no planes are outbound
 						PlaneUIApp.ctrl.handling = true;
-						PlaneUIApp.app.playAnim("Departure");
 						for (int x = 0;x<2;x++) {
+							PlaneUIApp.app.playAnim("Departure");
 							PlaneUIApp.app.status.setText(PlaneUIApp.ctrl.outbound.peek()+" takes off in.. "+(2-x)+"s");
 							wait(1); //countdown to departure
 						}
@@ -54,8 +54,8 @@ public class TimerListener {
 
 				if (PlaneUIApp.ctrl.inbound.peek() != null) { //null check if no planes are inbound
 					PlaneUIApp.ctrl.handling = true;
-					PlaneUIApp.app.playAnim("Arrival");
 					for (int x = 0;x<4;x++) {
+						PlaneUIApp.app.playAnim("Arrival");
 						PlaneUIApp.app.status.setText(PlaneUIApp.ctrl.inbound.peek()+" enters in.. "+(4-x)+"s");
 						wait(1); //countdown to arrival
 					}

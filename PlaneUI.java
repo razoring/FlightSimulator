@@ -248,8 +248,13 @@ public class PlaneUI extends JFrame {
 		for (int i = 0;i<11;i++) {
 		    icon = new ImageIcon("src/FlightSimulator/PlaneAnim/"+type+"/pixil-frame-"+i+".png");
 		    img.setIcon(icon);
+		    try {
+		    	Thread.sleep(100);
+		    } catch(InterruptedException e) {
+				System.out.println("500: Unable to wait...");
+		    }
 		}
-	    //icon = new ImageIcon("src/FlightSimulator/PlaneAnim/"+type+"/pixil-frame-0.png");
-	    //img.setIcon(icon);
+	    icon = new ImageIcon("src/FlightSimulator/PlaneAnim/"+type+"/pixil-frame-0.png");
+	    img.setIcon(icon);
 	}
 } //end class
