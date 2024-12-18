@@ -61,25 +61,18 @@ public class PlaneUI extends JFrame {
 		super("Plane Simulator"); //set title
 		setLayout(border);
 		
-		add(StatusUI(), BorderLayout.NORTH); //add status labal to main UI
-		add(ListUI(), BorderLayout.CENTER); //add planes display to main UI
-		add(InteractionUI(), BorderLayout.SOUTH); //add interactive ui elements to main UI
-
-	} //end constructor
-
-	/**
-	 * Handles the upper status bar. Mostly here for padding
-	 */
-	public JPanel StatusUI() {
+		//Padding for status bar
 		JPanel statusBar = new JPanel(new BorderLayout());
 		statusBar.add(status, BorderLayout.CENTER);
 		statusBar.add(new JPanel(), BorderLayout.WEST);
 		statusBar.add(new JPanel(), BorderLayout.SOUTH);
 		
-		return statusBar;
-	}
-	
-	
+		add(statusBar, BorderLayout.NORTH); //add status labal to main UI
+		add(ListUI(), BorderLayout.CENTER); //add planes display to main UI
+		add(InteractionUI(), BorderLayout.SOUTH); //add interactive ui elements to main UI
+
+	} //end constructor
+
 	/**
 	 * Handles the JTextField showing departure/arrivals.
 	 */
