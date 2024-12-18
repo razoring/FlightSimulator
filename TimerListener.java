@@ -42,7 +42,7 @@ public class TimerListener {
 	            System.out.println(PlaneUIApp.ctrl.inbound.peek());
 
 	            // if both queues are empty
-	            if (PlaneUIApp.ctrl.inbound.peek() == null && PlaneUIApp.ctrl.outbound.peek() == null) {
+	            if (!PlaneUIApp.ctrl.inbound.isEmpty() && !PlaneUIApp.ctrl.outbound.isEmpty()) {
 	                PlaneUIApp.app.status.setText("Simulation is waiting for more planes");
 	            }
 
