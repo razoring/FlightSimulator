@@ -34,38 +34,30 @@ public class TimerListener {
 	 * Handles the inbound/outbound cycle. Follows the pattern of two depart, then one arrives. 
 	 */
 	public static void sharedMain() {
-	    System.out.print(""); // Required to prevent a specific bug
+		System.out.print(""); // TODO: DO NOT REMOVE!!! IS REQUIRED FOR CODE TO RUN!!! IF REMOVED, SCRIPT WILL NEVER RUN
 	    if (PlaneUIApp.ctrl.started) {
 	        if (!PlaneUIApp.ctrl.handling) {
 	            PlaneUIApp.ctrl.handling = true;
-	            
-	            // Debugging: Print queue state
-	            System.out.println("Inbound Queue: " + PlaneUIApp.ctrl.inbound);
-	            System.out.println("Outbound Queue: " + PlaneUIApp.ctrl.outbound);
+	            System.out.println(PlaneUIApp.ctrl.inbound.toString());
+	            System.out.println(PlaneUIApp.ctrl.inbound.peek());
 
-	            // If both queues are empty
-	            if (PlaneUIApp.ctrl.inbound.isEmpty() && PlaneUIApp.ctrl.outbound.isEmpty()) {
+	            // if both queues are empty
+	            if (!PlaneUIApp.ctrl.inbound.isEmpty() && !PlaneUIApp.ctrl.outbound.isEmpty()) {
 	                PlaneUIApp.app.status.setText("Simulation is waiting for more planes");
 	            }
 
-	            // Handle departures
+	            // handle departures
 	            for (int i = 0; i < 2; i++) {
-	                if (!PlaneUIApp.ctrl.outbound.isEmpty()) { // Check if planes are outbound
-	                    String departingFlight = PlaneUIApp.ctrl.outbound.peek();
-	                    PlaneUIApp.ctrl.timerRelay = departingFlight + " departed";
-	                    PlaneUIApp.ctrl.updateQueue(PlaneUIApp.ctrl.outbound);
-	                    PlaneUIApp.app.status.setText(departingFlight + " has taken off.");
-	                    wait(1); // Delay between departures
+	                if (PlaneUIApp.ctrl.outbound.peek() != null) { // check if planes ae outbound
+	                	PlaneUIApp.ctrl.updateQueue(PlaneUIApp.ctrl.outbound);
+		                PlaneUIApp.ctrl.timerRelay = "Departure";
 	                }
 	            }
 
-	            // Handle arrivals
-	            if (!PlaneUIApp.ctrl.inbound.isEmpty()) { // Check if planes are inbound
-	                String arrivingFlight = PlaneUIApp.ctrl.inbound.peek();
-	                PlaneUIApp.ctrl.timerRelay = arrivingFlight + " arrived";
+	            // handle arrivals
+	            if (PlaneUIApp.ctrl.inbound.peek() != null) { // check if planes are inbound
 	                PlaneUIApp.ctrl.updateQueue(PlaneUIApp.ctrl.inbound);
-	                PlaneUIApp.app.status.setText(arrivingFlight + " has landed.");
-	                wait(1); // Delay before next cycle
+	                PlaneUIApp.ctrl.timerRelay = "Arrival";
 	            }
 
 	            PlaneUIApp.ctrl.handling = false;
