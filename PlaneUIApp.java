@@ -69,14 +69,18 @@ public class PlaneUIApp {
 			if (arrRead.hasNext()) {
 		        String arrData = arrRead.nextLine();
 		        for (String val : arrData.substring(1,arrData.length()-1).split(",")) {
-		        	ctrl.addIn(val.trim());
+		        	if (!val.isEmpty()) {
+			        	ctrl.addIn(val.trim());
+		        	}
 		        }
 			}
 			
 			if (depRead.hasNext()) {
 		        String depData = depRead.nextLine();
 		        for (String val : depData.substring(1,depData.length()-1).split(",")) {
-		        	ctrl.addOut(val.trim());
+		        	if (!val.isEmpty()) {
+			        	ctrl.addOut(val.trim());
+		        	}
 		        }
 			}
 

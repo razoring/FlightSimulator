@@ -38,8 +38,8 @@ public class TimerListener {
 	    if (PlaneUIApp.ctrl.started) {
 	        if (!PlaneUIApp.ctrl.handling) {
 	            PlaneUIApp.ctrl.handling = true;
-	            System.out.println(PlaneUIApp.ctrl.inbound.toString());
-	            System.out.println(PlaneUIApp.ctrl.inbound.peek());
+	            //System.out.println(PlaneUIApp.ctrl.inbound.toString());
+	            //System.out.println(PlaneUIApp.ctrl.inbound.peek());
 
 	            // if both queues are empty
 	            if (!PlaneUIApp.ctrl.inbound.isEmpty() && !PlaneUIApp.ctrl.outbound.isEmpty()) {
@@ -49,15 +49,15 @@ public class TimerListener {
 	            // handle departures
 	            for (int i = 0; i < 2; i++) {
 	                if (PlaneUIApp.ctrl.outbound.peek() != null) { // check if planes ae outbound
-	                	PlaneUIApp.ctrl.updateQueue(PlaneUIApp.ctrl.outbound);
 		                PlaneUIApp.ctrl.timerRelay = "Departure";
+	                	PlaneUIApp.ctrl.updateQueue(PlaneUIApp.ctrl.outbound);
 	                }
 	            }
 
 	            // handle arrivals
 	            if (PlaneUIApp.ctrl.inbound.peek() != null) { // check if planes are inbound
-	                PlaneUIApp.ctrl.updateQueue(PlaneUIApp.ctrl.inbound);
 	                PlaneUIApp.ctrl.timerRelay = "Arrival";
+	                PlaneUIApp.ctrl.updateQueue(PlaneUIApp.ctrl.inbound);
 	            }
 
 	            PlaneUIApp.ctrl.handling = false;
