@@ -25,12 +25,6 @@ import javax.swing.SwingConstants;
  * Generates the frontend UI for the plane simulator.
  */
 
-/* TODO:
- * + Animation panel
- * + Individual TODOs in methods/inner classes
- * + Raymond Likes Men.
- */
-
 @SuppressWarnings("serial")
 public class PlaneUI extends JFrame {
 	// public global variables for synchronous processing

@@ -5,26 +5,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
-/*
- * TODO:
- * !!! Normal Status Messages (Flight In/Out) *DONE: Needs to be checked*
- * !!! Disable start
- * !!! Error Status Messages *DONE: Needs to be checked*
- * !!! File Saving *DONE: Needs to be checked*
- * !!! 50x50 Plane Animation (must be realistic D:) [Raymond's Job]
- * !! Comments
- * !! Remove Unused Code
- * !! CHECK FOR REDUNDANCY mashallah
- * ! Every error must have a status message either in console or in the label
- * ! Check code
- * - Optimize code [raymond's job]
- */
-
 /**
  * Jiawei Chen, Raymond So <p>
  * 12/17/2024 <p>
  * Generates the frame, and handles persistent data for arrival/departure files.
  */
+
 public class PlaneUIApp {
 	public static Controller ctrl = new Controller(); // global reference for synchronous processing
 	public static PlaneUI app = new PlaneUI(); // global reference for synchronous processing
