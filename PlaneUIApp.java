@@ -50,7 +50,7 @@ public class PlaneUIApp {
 			}
 
 			try {
-				if (app.arrFile.createNewFile()) {
+				if (app.arrFile.createNewFile()) { //makes new arrivals file if not already exist
 					System.out.println("404: File not found");
 					System.out.println("201: "+app.arrFile.getName()+" created");
 				} else {

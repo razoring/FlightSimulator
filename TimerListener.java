@@ -60,7 +60,7 @@ public class TimerListener {
 	                PlaneUIApp.ctrl.updateQueue(PlaneUIApp.ctrl.inbound);
 	            }
 
-	            PlaneUIApp.ctrl.handling = false;
+	            PlaneUIApp.ctrl.handling = false; //disable handling mode
 	        }
 	    }
 	}

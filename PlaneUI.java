@@ -1,4 +1,5 @@
 package FlightSimulator;
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -12,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -91,7 +93,10 @@ public class PlaneUI extends JFrame {
 		JPanel departures = new JPanel(new BorderLayout()); //for departures
 		departures.add(depTitle, BorderLayout.NORTH); //add header
 		departures.add(depDisplay, BorderLayout.CENTER); //add display JList
-
+		
+		arrivals.add(new JScrollPane(arrDisplay)); //scroll panes
+		departures.add(new JScrollPane(depDisplay));
+		
 		list.add(arrivals); //add inbound
 		list.add(departures); //add outbound
 
@@ -203,17 +208,17 @@ public class PlaneUI extends JFrame {
 		public void actionPerformed(ActionEvent event) {
 			if (event.getSource() == exit) {
 				try { // write to created/found files
-					FileWriter depWriter = new FileWriter(depFile);
+					FileWriter depWriter = new FileWriter(depFile); //departures
 					depWriter.write(""+Arrays.deepToString(PlaneUIApp.ctrl.outbound.toArray()));
-					depWriter.close();
+					depWriter.close(); 
 					
-					FileWriter arrWriter = new FileWriter(arrFile);
+					FileWriter arrWriter = new FileWriter(arrFile); //arrivals
 					arrWriter.write(""+Arrays.deepToString(PlaneUIApp.ctrl.inbound.toArray()));
 					arrWriter.close();
 				} catch(IOException e) {
 					System.out.println("409: Trouble writing... exiting...");
 				}
-				System.exit(ABORT); //Terminate the code (I looked this one up) congrats! :D
+				System.exit(ABORT); //Terminate the code
 			} else if (event.getSource() == start) {
 				PlaneUIApp.ctrl.started = true;
 				start.setEnabled(false); //disables start button
